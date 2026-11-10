@@ -38,10 +38,24 @@ def guardar_paises(paises):
     
 ###################################################################################
 def pedir_entero(mensaje):
-    pass
+    while True:
+        try:
+            numero = int(input(mensaje))
+        except ValueError:
+            print("Error: ingrese un número entero")
+            continue
+
+        if numero >= 0:
+            return numero
+        print("Error: el número debe ser mayor o igual a '0'")
 
 def pedir_texto(mensaje):
-    pass
+    texto = input(mensaje).strip()
+
+    while texto == "":
+        print("Error: no puede ingresar un texto vacío")
+        texto = input(mensaje).strip()
+    return texto
 
 def buscar_pais(paises,nombre):
     pass
@@ -81,10 +95,10 @@ def main():
 
     while True:
         menu()
-        opcion = input("Ingrese una opcion (1 -7): ")
+        opcion = input("Ingrese una opcion (1-7): ")
         while not opcion.isdigit() or int(opcion) < 1 or int(opcion) > 7:
-            print("Error. tiene que ser un digito entre 1 y 7.")
-            opcion = input("Ingrese una opcion (1 -7): ")
+            print("Error: tiene que ser un digito entre 1 y 7.")
+            opcion = input("Ingrese una opcion (1-7): ")
 
         match opcion:
             case"1":
@@ -105,3 +119,11 @@ def main():
                 break
 
 main()
+
+
+
+#(para probar funciones)
+#if __name__ == "__main__":
+
+    #print(pedir_entero("poblacion: "))
+    #print(pedir_texto("nombre: "))
