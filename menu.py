@@ -58,17 +58,20 @@ def pedir_texto(mensaje):
     return texto
 
 def buscar_pais(paises,nombre):
-    pass
+    for pais in paises:
+        if pais["nombre"].lower() == nombre.strip().lower():
+            return pais
+    return None
 
 #####################################################################
-                    
+
 def agregar_pais(paises):
     pass
 
 def actualizar_pais(paises):
     pass
 
-def buscar_pais(paises):
+def buscar_pais_menu(paises):
     pass
 
 def filtrar_paises(paises):
@@ -106,7 +109,7 @@ def main():
             case "2":
                 actualizar_pais(paises)
             case "3":
-                buscar_pais(paises)
+                buscar_pais_menu(paises)
             case "4":
                 filtrar_paises(paises)
             case "5":
@@ -124,6 +127,9 @@ main()
 
 #(para probar funciones)
 #if __name__ == "__main__":
-
+    
     #print(pedir_entero("poblacion: "))
     #print(pedir_texto("nombre: "))
+    #paises= cargar_paises()
+    #print(buscar_pais(paises, "argentina"))
+    
