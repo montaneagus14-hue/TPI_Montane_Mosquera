@@ -44,6 +44,7 @@ def guardar_paises(paises):
         return False
     
 ###################################################################################
+
 def pedir_entero(mensaje):
     while True:
         try:
@@ -70,16 +71,52 @@ def buscar_pais(paises,nombre):
             return pais
     return None
 
-#####################################################################
+###################################################################################
 
 def agregar_pais(paises):
-    pass
+    pais = pedir_texto("Nombre del país: ")
+
+    while buscar_pais(paises,pais) is not None:
+        print(f"Error: {pais} ya existe")
+        pais = pedir_texto("Nombre del país: ")
+
+    poblacion = pedir_entero("Población: ")
+    superficie = pedir_entero("Superficie: ")
+    continente = pedir_texto("Continente: ")
+
+    paises.append({"nombre": pais, "poblacion": poblacion, "superficie": superficie, "continente": continente})
+
+    if guardar_paises(paises):
+        print("Datos guardados correctamente")
 
 def actualizar_pais(paises):
-    pass
+    pais = pedir_texto("Nombre del país: ")
+    pais_encontrado = buscar_pais(paises, pais)
 
+    if pais_encontrado is None:
+        print(f"Error: {pais} no existe en la lista")
+        return
+
+    pais_encontrado["poblacion"] = pedir_entero("Poblacion: ")
+    pais_encontrado["superficie"] = pedir_entero("Superficie: ")
+
+    print("País actualizado correctamente.")
+    
 def buscar_pais_menu(paises):
-    pass
+    pais = pedir_texto("Nombre del país: ")
+    pais_encontrado = buscar_pais(paises, pais)
+
+    if pais_encontrado is None:
+        print(f"Error: {pais} no existe en la lista")
+        return
+
+    print("\nResultado de la busqueda:")
+    print(f"""
+    País: {pais_encontrado['nombre']}
+    Continente: {pais_encontrado['continente']}
+    Población: {pais_encontrado['poblacion']:,}
+    Superficie: {pais_encontrado['superficie']:,} km²
+    """)
 
 def filtrar_paises(paises):
 
@@ -125,7 +162,7 @@ def filtrar_paises(paises):
 
             for pais in paises:
                 if pais["poblacion"] >= minimo and pais["poblacion"] <= maximo:
-                 filtro.append(pais)
+                    filtro.append(pais)
 
         case "C":
             minimo = pedir_entero("Superficie mínima: ")
@@ -168,7 +205,7 @@ def ordenar_paises(paises):
         case "A": 
                 for i in range(len(paises)):
                     for j in range(len(paises) - 1):
-                         if paises[j]["nombre"].lower() > paises[j+1]["nombre"].lower():
+                        if paises[j]["nombre"].lower() > paises[j+1]["nombre"].lower():
                             auxiliar = paises[j]
                             paises[j] = paises[j+1]
                             paises[j+1] = auxiliar
@@ -304,9 +341,10 @@ def main():
 
 main()
 
+
 # if __name__ == "__main__":
-    
-    # print(pedir_entero("poblacion: "))
-    # print(pedir_texto("nombre: "))
-    # paises= cargar_paises()
-    # print(buscar_pais(paises, "argentina"))    
+
+# print(pedir_entero("poblacion: "))
+# print(pedir_texto("nombre: "))
+# paises= cargar_paises()
+# print(buscar_pais(paises, "argentina"))
