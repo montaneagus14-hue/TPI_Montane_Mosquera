@@ -82,7 +82,7 @@ def agregar_pais(paises):
 
     poblacion = pedir_entero("Población: ")
     superficie = pedir_entero("Superficie: ")
-    continente = pedir_texto("Continente: ")
+    continente = pedir_texto("Continente: ").title()
 
     paises.append({"nombre": pais, "poblacion": poblacion, "superficie": superficie, "continente": continente})
 
@@ -91,32 +91,88 @@ def agregar_pais(paises):
 
 def actualizar_pais(paises):
     pais = pedir_texto("Nombre del país: ")
-    pais_encontrado = buscar_pais(paises, pais)
 
-    if pais_encontrado is None:
-        print(f"Error: {pais} no existe en la lista")
+    while len(pais.strip()) < 3:
+        print("Error: debe ingresar al menos 3 letras")
+        pais = pedir_texto("Nombre del país: ")
+
+    coincidencias = []
+
+    for p in paises:
+        if pais.lower() in p["nombre"].lower():
+            coincidencias.append(p)
+
+    if len(coincidencias) == 0:
+        print(f"Error: no se encontraron países con '{pais}'.")
         return
 
-    pais_encontrado["poblacion"] = pedir_entero("Poblacion: ")
+    if len(coincidencias) == 1:
+        pais_encontrado = coincidencias[0]
+        print(f"País encontrado: {pais_encontrado['nombre']}")
+
+    else:
+        print("\nPaíses encontrados:")
+
+        for i in range(len(coincidencias)):
+            print(f"{i+1}. {coincidencias[i]['nombre']}")
+
+        opcion = pedir_entero("Seleccione un país: ")
+
+        while opcion < 1 or opcion > len(coincidencias):
+            print("Error: opción inválida")
+            opcion = pedir_entero("Seleccione un país: ")
+
+        pais_encontrado = coincidencias[opcion - 1]
+
+    pais_encontrado["poblacion"] = pedir_entero("Población: ")
     pais_encontrado["superficie"] = pedir_entero("Superficie: ")
 
-    print("País actualizado correctamente.")
-    
+    if guardar_paises(paises):
+        print(f"{pais_encontrado['nombre']} actualizado correctamente.")
+
 def buscar_pais_menu(paises):
     pais = pedir_texto("Nombre del país: ")
-    pais_encontrado = buscar_pais(paises, pais)
 
-    if pais_encontrado is None:
-        print(f"Error: {pais} no existe en la lista")
+    while len(pais.strip()) < 3:
+        print("Error: debe ingresar al menos 3 letras")
+        pais = pedir_texto("Nombre del país: ")
+
+    coincidencias = []
+
+    for p in paises:
+        if pais.lower() in p["nombre"].lower():
+            coincidencias.append(p)
+
+    if len(coincidencias) == 0:
+        print(f"Error: no se encontraron países con '{pais}'.")
         return
 
-    print("\nResultado de la busqueda:")
+    if len(coincidencias) == 1:
+        pais_encontrado = coincidencias[0]
+
+    else:
+        print("Resultado de búsqueda:")
+        print("------------------------------")
+
+        for i in range (len(coincidencias)):
+            print(f"{i+1}. {coincidencias[i]['nombre']}")
+        opcion = pedir_entero("Seleccione un país: ")
+
+        while opcion < 1 or opcion > len(coincidencias):
+            print("Error: opción inválida")
+            opcion = pedir_entero("Seleccione un país: ")
+
+        pais_encontrado = coincidencias[opcion - 1]
+
+    print("------------------------------")
+    print("Resultado de búsqueda:")
     print(f"""
-    País: {pais_encontrado['nombre']}
-    Continente: {pais_encontrado['continente']}
-    Población: {pais_encontrado['poblacion']:,}
-    Superficie: {pais_encontrado['superficie']:,} km²
+    -País: {pais_encontrado['nombre']}
+    -Continente: {pais_encontrado['continente']}
+    -Población: {pais_encontrado['poblacion']:,}
+    -Superficie: {pais_encontrado['superficie']:,} km²
     """)
+    print("------------------------------")
 
 def filtrar_paises(paises):
 
@@ -124,7 +180,7 @@ def filtrar_paises(paises):
     print("B. Rango de población.")
     print("C. Rango de superficie.")
 
-    opcion = input("Elija una opción:").strip().upper()
+    opcion = input("Elija una opción: ").strip().upper()
 
     while not opcion.isalpha() or opcion not in ("A","B","C"):
         print("Error: tiene que ser una letra: A, B o C")
@@ -195,11 +251,11 @@ def ordenar_paises(paises):
     print("B. Población.")
     print("C. Superficie.")
 
-    opcion = input("Elija una opción:").strip().upper()
+    opcion = input("Elija una opción: ").strip().upper()
     
     while not opcion.isalpha() or opcion not in ("A","B","C"):
             print("Error: tiene que ser una letra: A, B o C")
-            opcion = input("Elija una opción:").strip().upper()
+            opcion = input("Elija una opción: ").strip().upper()
 
     match opcion:
         case "A": 
@@ -209,7 +265,6 @@ def ordenar_paises(paises):
                             auxiliar = paises[j]
                             paises[j] = paises[j+1]
                             paises[j+1] = auxiliar
-
 
         case "B":
                 for i in range(len(paises)):
@@ -299,7 +354,7 @@ def mostrar_estadisticas(paises):
     for continente in cantidad_continentes:
         print(f"- {continente}: {cantidad_continentes[continente]}")
 
-#################################################################################
+###################################################################################
 
 def menu():
     print("\n===== GESTIÓN DE PAÍSES =====")
@@ -310,6 +365,7 @@ def menu():
     print("5. Ordenar países")
     print("6. Mostrar estadísticas")
     print("7. Salir")
+    print("")
 
 def main():
     paises = cargar_paises()
