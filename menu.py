@@ -54,7 +54,28 @@ def guardar_paises(paises):
     except OSError as error:
         print(f"Error: no se pudo guardar el archivo: {error}")
         return False
-    
+
+# Cargar los nombres de los países válidos
+def cargar_paises_validos():
+    paises_validos = []
+
+    with open("paises_validos.csv", "r", encoding="utf-8-sig") as archivo:
+        lector = csv.DictReader(archivo)
+
+        for fila in lector:
+            paises_validos.append(fila["nombre"])
+
+    return paises_validos       
+
+
+#Validar que el país agregado exista
+def validar_pais(nombre, paises_validos):
+
+    for pais in paises_validos:
+        if nombre.strip().lower() == pais.strip().lower():
+            return True
+
+    return False
 ###################################################################################
 
 # Solicita un número entero mayor o igual a cero
@@ -93,13 +114,19 @@ def buscar_pais(paises,nombre):
 ###################################################################################
 
 # Agrega un nuevo país verificando que no exista previamente
-def agregar_pais(paises):
+def agregar_pais(paises, paises_validos):
     pais = pedir_texto("Nombre del país: ")
 
-    # Evita agregar países duplicados
-    while buscar_pais(paises,pais) is not None:
-        print(f"Error: {pais} ya existe")
-        pais = pedir_texto("Nombre del país: ")
+    # Valida que el país exista y que no esté cargado previamente
+    while not validar_pais(pais, paises_validos) or buscar_pais(paises, pais) is not None:
+
+        if not validar_pais(pais, paises_validos):
+            print("Error: el nombre ingresado no corresponde a un país existente.")
+
+        else:
+            print(f"Error: {pais} ya existe")
+
+        pais = pedir_texto("Ingrese otro país: ")
 
     # Solicita los datos del país a agregar
     poblacion = pedir_entero("Población: ")
@@ -447,6 +474,7 @@ def menu():
 # Función principal del programa
 def main():
     paises = cargar_paises() # Carga los países almacenados en el archivo
+    paises_validos = cargar_paises_validos()   #Carga los países válidos
 
     while True: # Se repite el programa hasta que la opción 7 sea ingresada
         menu()
@@ -460,7 +488,7 @@ def main():
         # Ejecuta la acción seleccionada por el usuario
         match opcion:
             case"1":
-                agregar_pais(paises)
+                agregar_pais(paises, paises_validos)
             case "2":
                 actualizar_pais(paises)
             case "3":
