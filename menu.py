@@ -262,7 +262,7 @@ def filtrar_paises(paises):
     match opcion: 
         case "A":
             # Lista los continentes válidos
-            continentes = ["america", "asia", "europa", "africa", "oceania"]
+            continentes = ["america del sur","america del norte","asia","europa","africa","oceania"]
 
             continente = pedir_texto("Continente: ").lower()
             continente = continente.replace("á", "a")
