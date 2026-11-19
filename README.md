@@ -41,6 +41,7 @@ python main.py
 - Mosquera, Sofia
 - Montané, Agustina
 
+## Enlace a la documentación en PDF
 ## Enlace al video demostrativo
 Vídeo explicativo: https://drive.google.com/file/d/18-u92XzbZ0ebpGMNgaftRG2LMJbAv_S-/view?usp=drive_link
 
