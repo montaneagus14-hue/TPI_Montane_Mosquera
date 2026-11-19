@@ -62,20 +62,23 @@ def cargar_paises_validos():
     with open("paises_validos.csv", "r", encoding="utf-8-sig") as archivo:
         lector = csv.DictReader(archivo)
 
+        # Recorre el archivo y almacena los nombres de los países
         for fila in lector:
             paises_validos.append(fila["nombre"])
 
     return paises_validos       
 
 
-#Validar que el país agregado exista
+# Validar que el país agregado exista
 def validar_pais(nombre, paises_validos):
 
+    # Compara el nombre ingresado con cada país de la lista
     for pais in paises_validos:
         if nombre.strip().lower() == pais.strip().lower():
             return True
 
     return False
+
 ###################################################################################
 
 # Solicita un número entero mayor o igual a cero
@@ -132,6 +135,24 @@ def agregar_pais(paises, paises_validos):
     poblacion = pedir_entero("Población: ")
     superficie = pedir_entero("Superficie: ")
     continente = pedir_texto("Continente: ").title()
+
+    # Verifica si el continente ingresado existe entre los países cargados
+    continente_valido = False
+
+    for p in paises:
+        if continente == p["continente"]:
+            continente_valido = True
+
+    # Solicita nuevamente el continente mientras no sea válido
+    while continente_valido == False:
+        print("Error: Ingresó un continente que no existe")
+        continente = pedir_texto("Continente: ").title()
+        continente_valido = False
+
+        # Vuelve a comprobar si el continente ingresado existe
+        for p in paises:
+            if continente == p["continente"]:
+                continente_valido = True
 
     # Agrega el nuevo país a la lista
     paises.append({"nombre": pais, "poblacion": poblacion, "superficie": superficie, "continente": continente})
