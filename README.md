@@ -36,7 +36,7 @@ python main.py
 
 5. Seguir las instrucciones del menú interactivo.
 
-## 👥 Integrantes
+## Integrantes
 
 - Mosquera, Sofia
 - Montané, Agustina
