@@ -134,28 +134,21 @@ def agregar_pais(paises, paises_validos):
     # Solicita los datos del país a agregar
     poblacion = pedir_entero("Población: ")
     superficie = pedir_entero("Superficie: ")
-    continente = pedir_texto("Continente: ").title()
+    # Lista los continentes válidos
+    continentes = {"america del sur": "América del Sur", "america del norte": "América del Norte", "asia": "Asia", "europa": "Europa","africa": "África","oceania": "Oceanía",}
 
-    # Verifica si el continente ingresado existe entre los países cargados
-    continente_valido = False
+    continente = pedir_texto("Continente: ").strip().lower().replace("á", "a").replace("ó","o")
 
-    for p in paises:
-        if continente == p["continente"]:
-            continente_valido = True
+    # Valida que el continente exista
+    while continente not in continentes:
+        print("Error: el continente ingresado no es válido.")
+        continente = pedir_texto("Ingrese un continente válido: ").strip().lower().replace("á", "a").replace("ó","o")
 
-    # Solicita nuevamente el continente mientras no sea válido
-    while continente_valido == False:
-        print("Error: Ingresó un continente que no existe")
-        continente = pedir_texto("Continente: ").title()
-        continente_valido = False
-
-        # Vuelve a comprobar si el continente ingresado existe
-        for p in paises:
-            if continente == p["continente"]:
-                continente_valido = True
+    # Guardado con mayúsculas y con tilde
+    continente_guardar = continentes[continente]
 
     # Agrega el nuevo país a la lista
-    paises.append({"nombre": pais, "poblacion": poblacion, "superficie": superficie, "continente": continente})
+    paises.append({"nombre": pais, "poblacion": poblacion, "superficie": superficie, "continente": continente_guardar})
 
     # Guarda los cambios realizados en el archivo csv
     if guardar_paises(paises):
