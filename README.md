@@ -43,5 +43,5 @@ python main.py
 
 ## Enlace al video demostrativo y a la documentación en PDF
 Vídeo explicativo: https://drive.google.com/file/d/18-u92XzbZ0ebpGMNgaftRG2LMJbAv_S-/view?usp=drive_link
-Documentación en PDF: 
+                            Documentación en PDF: 
 
