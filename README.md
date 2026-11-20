@@ -42,7 +42,7 @@ python main.py
 - Montané, Agustina
 
 ## Enlace al video demostrativo y a la documentación en PDF
- - Documentación en PDF: 
+ - Documentación en PDF: https://drive.google.com/file/d/10c1scl20fgUWXbN2rmJpiSNXXNUXkiaK/view?usp=sharing
 - Vídeo explicativo: https://drive.google.com/file/d/18-u92XzbZ0ebpGMNgaftRG2LMJbAv_S-/view?usp=drive_link
 
 
